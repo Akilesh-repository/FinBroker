@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing & Rates - Equipment Financing & Business Loan Broker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontWeight: { semibold: '500', bold: '600', extrabold: '800', black: '900' }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* === RESET & CORE === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* === THEME VARIABLES (Finance Blue, Light Blue, White, Black) === */
+        :root {
+            --bg-color: #FFFFFF;         
+            --bg-secondary: #EFF6FF;     
+            --bg-card: #FFFFFF;          
+            --text-main: #000000;        
+            --text-muted: #475569;       
+            --accent-color: #2563EB;     
+            --accent-dark: #1D4ED8;      
+            --border-color: #DBEAFE;     
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --drawer-bg: rgba(255, 255, 255, 0.98);
+            --menu-hover-bg: rgba(37, 99, 235, 0.08);
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            --bg-color: #020617;         
+            --bg-secondary: #0F172A;     
+            --bg-card: #0F172A;
+            --text-main: #FFFFFF;        
+            --text-muted: #94A3B8;
+            --accent-color: #3B82F6;     
+            --accent-dark: #2563EB;      
+            --border-color: #1E293B;
+            --nav-bg: rgba(2, 6, 23, 0.95);
+            --drawer-bg: rgba(2, 6, 23, 0.98);
+            --menu-hover-bg: rgba(59, 130, 246, 0.15);
+        }
+
+        /* RTL SUPPORT */
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .ml-auto { margin-right: auto; margin-left: 0; }
+        [dir="rtl"] .mr-auto { margin-left: auto; margin-right: 0; }
+        [dir="rtl"] .dropdown-menu { left: auto; right: 0; transform-origin: top right; }
+        [dir="rtl"] .fullscreen-menu { right: auto; left: 0; transform: translateX(-100%); border-left: none; border-right: 1px solid var(--border-color); }
+        [dir="rtl"] .fullscreen-menu.active { transform: translateX(0); }
+        [dir="rtl"] .fa-arrow-right, [dir="rtl"] .fa-chevron-right { transform: scaleX(-1); display: inline-block; }
+
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .animate-float { animation: float 5s ease-in-out infinite; }
+
+        /* === REDESIGNED FULL-WIDTH NAVBAR === */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color); padding: 0; height: 80px; display: flex; align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .navbar.scrolled { 
+            height: 64px; 
+            background: var(--bg-card); 
+            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.08); 
+        }
+
+        .nav-link {
+            position: relative; padding: 8px 12px; margin: 0 2px; color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 600;
+            text-transform: capitalize; letter-spacing: 0.2px; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+            cursor: pointer; border-radius: 6px; z-index: 1; background: transparent; white-space: nowrap;
+        }
+        .nav-link:hover, .nav-link.active { background: var(--menu-hover-bg); color: var(--accent-color); }
+
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .dropdown-menu { position: absolute; top: calc(100% + 10px); left: 0; transform: translateY(15px) scale(0.95); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; transform-origin: top left; }
+        .dropdown-inner { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; min-width: 220px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .dropdown-item { display: block; padding: 10px 14px; border-radius: 6px; color: var(--text-main); text-decoration: none; font-size: 13px; font-weight: 500; text-transform: capitalize; transition: all 0.2s; text-align: left; white-space: nowrap; }
+        .dropdown-item:hover { background: var(--menu-hover-bg); color: var(--accent-color); padding-left: 18px; }
+        [dir="rtl"] .dropdown-item:hover { padding-left: 14px; padding-right: 18px; }
+
+        .theme-toggle-pill {
+            width: 80px; height: 32px; background: var(--bg-secondary); border-radius: 6px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 10px; border: 1.5px solid var(--border-color); margin: 0 3px; direction: ltr !important; box-sizing: border-box; flex-shrink: 0;
+        }
+        .theme-toggle-pill i { font-size: 11px; z-index: 1; }
+        .theme-toggle-pill .fa-sun { color: #f59e0b; }
+        .theme-toggle-pill .fa-moon { color: #999; }
+        .theme-toggle-pill .thumb {
+            position: absolute; top: 2px; left: 3px; width: 24px; height: 24px; background: white; border-radius: 4px; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); z-index: 2; border: 1px solid var(--border-color);
+        }
+        body.dark-mode .theme-toggle-pill .thumb { transform: translateX(47px); background: #333; border-color: var(--border-color); }
+
+        .rtl-btn-style {
+            width: 80px; height: 32px; background: var(--bg-secondary); border-radius: 6px; border: 1.5px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; color: var(--text-main); transition: all 0.3s ease; margin: 0 3px; box-sizing: border-box; flex-shrink: 0;
+        }
+        .rtl-btn-style:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15); }
+
+        /* SECTION BUTTONS */
+        .btn { padding: 12px 28px; font-weight: 600; font-size: 14px; text-transform: capitalize; letter-spacing: 0.5px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; border: 1px solid transparent; border-radius: 8px; text-decoration: none; }
+        .btn-solid { background: var(--accent-color); color: #FFFFFF !important; }
+        .btn-solid:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 20px -3px rgba(37, 99, 235, 0.4); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--accent-color); color: var(--accent-color) !important; background: var(--menu-hover-bg); transform: translateY(-2px); }
+
+        /* AUTH BUTTONS */
+        .btn-auth { padding: 0; width: 80px; height: 36px; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-main); background: transparent; border: 1.5px solid var(--text-main); border-radius: 6px; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; box-sizing: border-box; flex-shrink: 0; margin: 0 3px; }
+        body.dark-mode .btn-auth { border-color: var(--border-color); }
+        .btn-auth:hover { border-color: var(--accent-color); color: var(--accent-color); background: var(--menu-hover-bg); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15); }
+
+        /* DRAWER MENU */
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(4px); }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+        .fullscreen-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 400px; height: 100dvh; background: var(--drawer-bg); z-index: 1001; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transform: translateX(100%); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid var(--border-color); }
+        [dir="rtl"] .fullscreen-menu { right: auto; left: 0; transform: translateX(-100%); border-left: none; border-right: 1px solid var(--border-color); }
+        .fullscreen-menu.active { opacity: 1; visibility: visible; transform: translateX(0); }
+        .mobile-link { display: block; width: 100%; padding: 16px 32px; font-size: 1.1rem; font-weight: 600; text-transform: capitalize; letter-spacing: 0.5px; color: var(--text-main); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid var(--border-color); }
+        .mobile-link:hover { color: var(--accent-color); padding-left: 40px; background: var(--menu-hover-bg); }
+        [dir="rtl"] .mobile-link:hover { padding-left: 32px; padding-right: 40px; }
+
+        /* FOOTER */
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding-top: 80px; }
+        footer h4 { color: var(--text-main); font-weight: 600; font-size: 1.1rem; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        footer a, footer li, footer span { color: var(--text-muted); text-decoration: none; transition: all 0.3s; font-size: 0.95rem; font-weight: 400; }
+        footer a:hover { color: var(--accent-color); }
+        .social-link-circle { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: all 0.3s; color: var(--text-main); background: transparent; }
+        .social-link-circle:hover { background: var(--accent-color); border-color: var(--accent-color); color: #FFFFFF; transform: translateY(-3px); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding: 32px 0; margin-top: 60px; }
+        
+        /* SECTION VIEWPORT FIT FIX */
+        .viewport-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5rem 0;
+            position: relative;
+        }
+        @media (max-width: 768px) {
+            .viewport-section {
+                min-height: auto;
+                padding: 4rem 0;
+            }
+        }
+        
+        /* PRICING SWITCH TOGGLE */
+        .pricing-toggle { display: inline-flex; bg-[var(--bg-secondary)]; border-radius: 999px; padding: 4px; border: 1px solid var(--border-color); position: relative; cursor: pointer; }
+        .pricing-toggle-slider { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); background: var(--accent-color); border-radius: 999px; transition: transform 0.3s ease; }
+        .pricing-toggle.active .pricing-toggle-slider { transform: translateX(100%); }
+        .pricing-btn { position: relative; z-index: 10; padding: 10px 24px; font-size: 14px; font-weight: 600; transition: color 0.3s ease; text-transform: capitalize; color: var(--text-muted); }
+        .pricing-toggle:not(.active) .pricing-btn:first-child { color: white; }
+        .pricing-toggle.active .pricing-btn:last-child { color: white; }
+    </style>
+</head>
+<body>
+
+    <!-- === REDESIGNED FULL-WIDTH NAVBAR === -->
+    <nav class="navbar" id="main-nav">
+        <div class="w-full max-w-[1440px] mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center flex-shrink-0 mr-6">
+                <a href="index.html" class="inline-flex items-center gap-2 text-xl font-bold tracking-wider whitespace-nowrap" style="color: var(--text-main) !important; text-decoration: none;">
+                    <i class="fas fa-chart-pie" style="color: var(--accent-color);"></i> FinBroker
+                </a>
+            </div>
+            
+            <div class="hidden xl:flex justify-center items-center flex-1">
+                <div class="dropdown">
+                    <div class="nav-link">Home <i class="fas fa-chevron-down text-[10px] ml-1 opacity-50"></i></div>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-inner">
+                            <a href="index.html" class="dropdown-item">Home Page 1</a>
+                            <a href="home-2.html" class="dropdown-item">Home Page 2</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <!-- SET ACTIVE TO PRICING -->
+                <a href="pricing.html" class="nav-link active">Pricing</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <div class="dropdown">
+                    <div class="nav-link">Dashboard <i class="fas fa-chevron-down text-[10px] ml-1 opacity-50"></i></div>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-inner">
+                            <a href="user.html" class="dropdown-item">User Dashboard</a>
+                            <a href="admin.html" class="dropdown-item">Admin Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hidden xl:flex items-center flex-shrink-0 ml-6 gap-2">
+                <div id="theme-toggle-desktop" class="theme-toggle-pill" title="Toggle Dark Mode">
+                    <i class="fas fa-sun"></i><i class="fas fa-moon"></i><div class="thumb"></div>
+                </div>
+                <button id="rtl-btn" class="rtl-btn-style" title="Toggle LTR/RTL">LTR</button>
+                <div class="w-px h-6 bg-[var(--border-color)] mx-2"></div>
+                <a href="login.html" class="btn-auth">Login</a>
+                <a href="register.html" class="btn-auth">Register</a>
+            </div>
+            
+            <div class="xl:hidden flex items-center justify-end gap-4">
+                <button id="mobile-btn" class="text-2xl text-[var(--text-main)] transition-colors hover:text-[var(--accent-color)]">
+                    <i class="fas fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- === HAMBURGER MENU DRAWER === -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="fullscreen-menu" id="fullscreen-menu">
+        <div class="w-full px-8 py-6 flex justify-between items-center shrink-0 border-b border-[var(--border-color)]">
+            <a href="index.html" class="inline-flex items-center gap-2 text-lg md:text-xl font-bold tracking-wider whitespace-nowrap" style="color: var(--text-main) !important; text-decoration: none;">
+                <i class="fas fa-chart-pie" style="color: var(--accent-color);"></i> FinBroker
+            </a>
+            <button id="close-menu" class="w-10 h-10 rounded-full flex items-center justify-center transition-all text-xl text-[var(--text-main)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent-color)]"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="flex flex-col w-full overflow-y-auto flex-1 py-4">
+            <a href="index.html" class="mobile-link">Home Page 1</a>
+            <a href="home-2.html" class="mobile-link">Home Page 2</a>
+            <a href="about.html" class="mobile-link">About</a>
+            <a href="services.html" class="mobile-link">Services</a>
+            <!-- SET ACTIVE TO PRICING -->
+            <a href="pricing.html" class="mobile-link" style="color: var(--accent-color);">Pricing</a>
+            <a href="blog.html" class="mobile-link">Blog</a>
+            <a href="faq.html" class="mobile-link">FAQ</a>
+            <a href="contact.html" class="mobile-link">Contact</a>
+            <div class="px-8 mt-6 mb-2"><span class="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-widest">Portals</span></div>
+            <a href="user.html" class="mobile-link !text-sm text-[var(--text-muted)]">User Dashboard</a>
+            <a href="admin.html" class="mobile-link !text-sm text-[var(--text-muted)]">Admin Dashboard</a>
+        </div>
+        <div class="w-full px-8 py-8 border-t border-[var(--border-color)] flex flex-col gap-6 shrink-0 bg-[var(--bg-secondary)]">
+            <div class="flex justify-between items-center w-full">
+                <div class="flex items-center gap-3">
+                    <span class="text-[var(--text-muted)] font-medium text-[10px] uppercase tracking-widest">Theme</span>
+                    <div id="theme-toggle-mobile" class="theme-toggle-pill"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><div class="thumb"></div></div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-[var(--text-muted)] font-medium text-[10px] uppercase tracking-widest">Dir</span>
+                    <button id="rtl-toggle-mobile" class="rtl-btn-style">LTR</button>
+                </div>
+            </div>
+            <div class="flex gap-4 w-full">
+                <a href="login.html" class="btn-auth flex-1 !h-[48px] !m-0">Login</a>
+                <a href="register.html" class="btn-auth flex-1 !h-[48px] !m-0">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- === HERO BANNER: PRICING === -->
+    <section class="relative w-full min-h-[100dvh] flex items-center justify-center bg-[var(--bg-secondary)] pt-28 pb-16 lg:py-24 overflow-hidden border-b border-[var(--border-color)]">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[var(--border-color)] to-transparent opacity-50 pointer-events-none"></div>
+        <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-[var(--accent-color)] rounded-full mix-blend-multiply filter blur-[120px] opacity-20 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+            <div class="flex flex-col items-start justify-center h-full text-left">
+                <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] mb-6 shadow-sm">
+                    <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-[var(--accent-color)]"></span></span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-[var(--accent-color)]">Transparent Rates</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-4 text-[var(--text-main)] tracking-tight">
+                    Clear Pricing. <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-color)] to-blue-400">No Hidden Fees.</span>
+                </h1>
+                <p class="text-[var(--text-muted)] text-base md:text-lg leading-relaxed font-medium mb-8 max-w-xl">
+                    We believe in absolute transparency. Explore our estimated rates and terms for equipment financing, working capital, and SBA loans based on your business profile.
+                </p>
+                <!-- EXACT LINKS PRESERVED -->
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8">
+                    <a href="contact.html" class="btn btn-solid !py-3 !px-8 shadow-lg hover:scale-105"><i class="fas fa-file-signature mr-2"></i> Get Custom Quote</a>
+                    <a href="faq.html" class="btn btn-outline !bg-[var(--bg-card)] !py-3 !px-8 shadow-sm hover:scale-105"><i class="fas fa-question-circle mr-2 text-[var(--accent-color)]"></i> Read Financing FAQ</a>
+                </div>
+                <div class="flex items-center gap-4 bg-[var(--bg-card)] px-5 py-3 rounded-2xl shadow-sm border border-[var(--border-color)]">
+                    <div class="w-10 h-10 rounded-full bg-[var(--bg-secondary)] flex items-center justify-center text-[var(--accent-color)]"><i class="fas fa-percentage"></i></div>
+                    <div class="text-left leading-tight">
+                        <p class="text-xs font-bold text-[var(--text-main)]">Rates from 4.99%</p>
+                        <p class="text-[10px] text-[var(--text-muted)]">Subject to credit approval.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative w-full h-[320px] sm:h-[420px] lg:h-[580px] rounded-3xl overflow-hidden shadow-2xl border border-[var(--border-color)] group block mt-6 lg:mt-0">
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80" alt="Financial Calculator & Accounting Review" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex items-end p-6 sm:p-8">
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl text-white w-full max-w-xs shadow-xl">
+                        <div class="flex justify-between items-center mb-2"><span class="text-xs font-semibold">Broker Fee</span><i class="fas fa-check-circle text-green-400"></i></div>
+                        <p class="text-sm font-medium text-gray-200">Our consulting is 100% free. We are paid directly by the lender.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === SECTION 1: RATE COMPARISON TABLE === -->
+    <section class="viewport-section bg-[var(--bg-color)] border-b border-[var(--border-color)]">
+        <div class="max-w-[1200px] mx-auto px-6 w-full text-center">
+            <span class="text-[var(--accent-color)] text-xs font-bold uppercase tracking-widest mb-3 block">Estimated Terms</span>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-main)] mb-12 tracking-tight">Current Financing Rates</h2>
+            <div class="overflow-x-auto bg-[var(--bg-card)] rounded-3xl border border-[var(--border-color)] shadow-sm">
+                <table class="w-full text-left min-w-[800px]">
+                    <thead class="bg-[var(--bg-secondary)] border-b border-[var(--border-color)]">
+                        <tr>
+                            <th class="p-6 text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">Loan Type</th>
+                            <th class="p-6 text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">Est. APR</th>
+                            <th class="p-6 text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">Term Length</th>
+                            <th class="p-6 text-sm font-bold text-[var(--text-main)] uppercase tracking-wider">Funding Amount</th>
+                            <th class="p-6 text-sm font-bold text-[var(--text-main)] uppercase tracking-wider text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[var(--border-color)]">
+                        <tr class="hover:bg-[var(--bg-secondary)] transition-colors">
+                            <td class="p-6">
+                                <div class="font-bold text-[var(--text-main)] mb-1"><i class="fas fa-tractor text-[var(--accent-color)] mr-2"></i> Equipment Financing</div>
+                                <div class="text-xs text-[var(--text-muted)] font-medium">For machinery & vehicles</div>
+                            </td>
+                            <td class="p-6 font-bold text-[var(--text-main)]">4.99% - 15.0%</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">1 - 6 Years</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">Up to $5M</td>
+                            <td class="p-6 text-center"><a href="contact.html" class="btn btn-outline !py-2 !px-4 text-xs">Apply</a></td>
+                        </tr>
+                        <tr class="hover:bg-[var(--bg-secondary)] transition-colors">
+                            <td class="p-6">
+                                <div class="font-bold text-[var(--text-main)] mb-1"><i class="fas fa-bolt text-[var(--accent-color)] mr-2"></i> Working Capital</div>
+                                <div class="text-xs text-[var(--text-muted)] font-medium">Unsecured cash flow</div>
+                            </td>
+                            <td class="p-6 font-bold text-[var(--text-main)]">Factor: 1.10 - 1.35</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">6 - 24 Months</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">Up to $1M</td>
+                            <td class="p-6 text-center"><a href="contact.html" class="btn btn-outline !py-2 !px-4 text-xs">Apply</a></td>
+                        </tr>
+                        <tr class="hover:bg-[var(--bg-secondary)] transition-colors">
+                            <td class="p-6">
+                                <div class="font-bold text-[var(--text-main)] mb-1"><i class="fas fa-building text-[var(--accent-color)] mr-2"></i> SBA 7(a) Loans</div>
+                                <div class="text-xs text-[var(--text-muted)] font-medium">Government backed</div>
+                            </td>
+                            <td class="p-6 font-bold text-[var(--text-main)]">Prime + 2.75%</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">10 - 25 Years</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">Up to $5M</td>
+                            <td class="p-6 text-center"><a href="contact.html" class="btn btn-outline !py-2 !px-4 text-xs">Apply</a></td>
+                        </tr>
+                        <tr class="hover:bg-[var(--bg-secondary)] transition-colors">
+                            <td class="p-6">
+                                <div class="font-bold text-[var(--text-main)] mb-1"><i class="fas fa-file-invoice-dollar text-[var(--accent-color)] mr-2"></i> Invoice Factoring</div>
+                                <div class="text-xs text-[var(--text-muted)] font-medium">B2B receivables</div>
+                            </td>
+                            <td class="p-6 font-bold text-[var(--text-main)]">1% - 3% / Month</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">30 - 90 Days</td>
+                            <td class="p-6 text-[var(--text-muted)] font-medium">No strict max</td>
+                            <td class="p-6 text-center"><a href="contact.html" class="btn btn-outline !py-2 !px-4 text-xs">Apply</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-[var(--text-muted)] mt-6 font-medium">* All rates are estimates and depend strictly on credit history, time in business, and annual revenue.</p>
+        </div>
+    </section>
+
+    <!-- === SECTION 2: QUALIFICATION TIERS (CARDS) === -->
+    <section class="viewport-section bg-[var(--bg-secondary)] border-b border-[var(--border-color)]">
+        <div class="max-w-[1440px] mx-auto px-6 w-full text-center">
+            <span class="text-[var(--accent-color)] text-xs font-bold uppercase tracking-widest mb-3 block">Approval Criteria</span>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-main)] mb-8 tracking-tight">Do You Qualify?</h2>
+            
+            <div class="flex justify-center mb-12">
+                <div class="pricing-toggle bg-[var(--bg-card)]" onclick="this.classList.toggle('active')">
+                    <div class="pricing-toggle-slider"></div>
+                    <span class="pricing-btn">Good Credit (650+)</span>
+                    <span class="pricing-btn">Bad Credit (< 650)</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tier 1 -->
+                <div class="bg-[var(--bg-card)] p-8 rounded-3xl border border-[var(--border-color)] shadow-sm text-left hover:-translate-y-2 transition-transform">
+                    <h3 class="text-xl font-bold text-[var(--text-main)] mb-2">Tier 1: Prime</h3>
+                    <p class="text-[var(--text-muted)] text-sm mb-6 border-b border-[var(--border-color)] pb-6 font-medium">Lowest rates available for established businesses.</p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-sm font-semibold text-[var(--text-main)]"><i class="fas fa-check-circle text-green-500 mr-3"></i> FICO Score: 700+</li>
+                        <li class="flex items-center text-sm font-semibold text-[var(--text-main)]"><i class="fas fa-check-circle text-green-500 mr-3"></i> Time in Biz: 3+ Years</li>
+                        <li class="flex items-center text-sm font-semibold text-[var(--text-main)]"><i class="fas fa-check-circle text-green-500 mr-3"></i> Annual Revenue: $500k+</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-outline w-full !bg-[var(--bg-secondary)]">Check Eligibility</a>
+                </div>
+                <!-- Tier 2 (Highlighted) -->
+                <div class="bg-[var(--accent-color)] p-8 rounded-3xl border border-[var(--accent-dark)] shadow-xl text-left hover:-translate-y-2 transition-transform transform scale-105 relative z-10">
+                    <div class="absolute top-0 right-6 bg-yellow-400 text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-b-lg shadow-sm">Most Common</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Tier 2: Standard</h3>
+                    <p class="text-blue-100 text-sm mb-6 border-b border-blue-400/30 pb-6 font-medium">Competitive rates for growing companies.</p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-sm font-semibold text-white"><i class="fas fa-check-circle text-blue-200 mr-3"></i> FICO Score: 600 - 699</li>
+                        <li class="flex items-center text-sm font-semibold text-white"><i class="fas fa-check-circle text-blue-200 mr-3"></i> Time in Biz: 1 - 3 Years</li>
+                        <li class="flex items-center text-sm font-semibold text-white"><i class="fas fa-check-circle text-blue-200 mr-3"></i> Annual Revenue: $250k+</li>
+                    </ul>
+                    <a href="contact.html" class="btn bg-white text-[var(--accent-color)] w-full hover:bg-gray-100">Check Eligibility</a>
+                </div>
+                <!-- Tier 3 -->
+                <div class="bg-[var(--bg-card)] p-8 rounded-3xl border border-[var(--border-color)] shadow-sm text-left hover:-translate-y-2 transition-transform">
+                    <h3 class="text-xl font-bold text-[var(--text-main)] mb-2">Tier 3: Sub-Prime</h3>
+                    <p class="text-[var(--text-muted)] text-sm mb-6 border-b border-[var(--border-color)] pb-6 font-medium">Revenue-based funding regardless of credit history.</p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center text-sm font-semibold text-[var(--text-main)]"><i class="fas fa-check-circle text-yellow-500 mr-3"></i> FICO Score: 500+</li>
+                        <li class="flex items-center text-sm font-semibold text-[var(--text-main)]"><i class="fas fa-check-circle text-yellow-500 mr-3"></i> Time in Biz: 6+ Months</li>
+                        <li class="flex items-center text-sm font-semibold text-[var(--text-main)]"><i class="fas fa-check-circle text-yellow-500 mr-3"></i> Annual Revenue: $150k+</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-outline w-full !bg-[var(--bg-secondary)]">Check Eligibility</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === SECTION 3: FINANCING CALCULATOR === -->
+    <section class="viewport-section bg-[var(--bg-color)] border-b border-[var(--border-color)]">
+        <div class="max-w-[1000px] mx-auto px-6 w-full">
+            <div class="text-center mb-12">
+                <span class="text-[var(--accent-color)] text-xs font-bold uppercase tracking-widest mb-3 block">Plan Ahead</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-main)] mb-4 tracking-tight">Equipment Loan Calculator</h2>
+                <p class="text-[var(--text-muted)] font-medium text-sm">Estimate your monthly payments. This is for illustrative purposes only.</p>
+            </div>
+            
+            <div class="bg-[var(--bg-card)] p-8 rounded-3xl border border-[var(--border-color)] shadow-lg flex flex-col md:flex-row gap-10">
+                <!-- Inputs -->
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-[var(--text-main)] mb-2">Equipment Cost ($)</label>
+                        <input type="number" value="50000" class="w-full p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] font-semibold focus:outline-none focus:border-[var(--accent-color)]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-[var(--text-main)] mb-2">Down Payment ($)</label>
+                        <input type="number" value="5000" class="w-full p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] font-semibold focus:outline-none focus:border-[var(--accent-color)]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-[var(--text-main)] mb-2">Term (Months)</label>
+                        <select class="w-full p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] font-semibold focus:outline-none focus:border-[var(--accent-color)] cursor-pointer">
+                            <option>36 Months</option><option selected>48 Months</option><option>60 Months</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Output Box -->
+                <div class="w-full md:w-1/2 bg-gradient-to-br from-[var(--accent-color)] to-[var(--accent-dark)] rounded-2xl p-8 text-white flex flex-col justify-center items-center text-center shadow-inner relative overflow-hidden">
+                    <i class="fas fa-calculator absolute top-4 right-4 text-6xl opacity-10"></i>
+                    <p class="text-blue-200 text-sm font-bold uppercase tracking-widest mb-2">Estimated Monthly Payment</p>
+                    <h3 class="text-5xl font-black mb-4">$1,085</h3>
+                    <p class="text-xs text-blue-100 font-medium mb-8 bg-black/20 py-2 px-4 rounded-lg">Based on an est. 7.5% APR</p>
+                    <a href="contact.html" class="btn bg-white text-[var(--accent-color)] hover:bg-gray-100 w-full shadow-lg">Get Exact Rate</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === FOOTER === -->
+    <footer>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 pt-4">
+                <div class="lg:col-span-4">
+                    <div class="mb-6">
+                        <a href="index.html" class="inline-flex items-center gap-2 text-lg md:text-xl font-bold tracking-wider whitespace-nowrap" style="color: var(--text-main) !important; text-decoration: none;">
+                            <i class="fas fa-chart-pie" style="color: var(--accent-color);"></i> FinBroker
+                        </a>
+                    </div>
+                    <p class="opacity-80 leading-relaxed text-sm font-medium mb-8 max-w-sm" style="color: var(--text-muted);">
+                        Dedicated to providing tailored equipment financing, working capital, and commercial loan solutions to help your business scale and succeed in today's economy.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-link-circle"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link-circle"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link-circle"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="lg:col-span-8">
+                    <!-- EXACT FILE REDIRECTS USED FOR FOOTER TOO -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+                        <div>
+                            <h4>Client Portal</h4>
+                            <ul class="space-y-4">
+                                <li><a href="login.html">Client Login</a></li>
+                                <li><a href="user.html">Borrower Dashboard</a></li>
+                                <li><a href="pricing.html">Rates & Terms</a></li>
+                                <li><a href="blog.html">Financial Insights Blog</a></li>
+                                <li><a href="faq.html">Broker FAQ</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Our Financing</h4>
+                            <ul class="space-y-4">
+                                <li><a href="services.html">Heavy Equipment Loans</a></li>
+                                <li><a href="services.html">Working Capital</a></li>
+                                <li><a href="services.html">SBA Loans</a></li>
+                                <li><a href="services.html">Invoice Factoring</a></li>
+                                <li><a href="services.html">Commercial Real Estate</a></li>
+                            </ul>
+                        </div>
+                        <div class="sm:col-span-2 md:col-span-1">
+                            <h4>Corporate Office</h4>
+                            <ul class="space-y-4 text-[var(--text-muted)] text-sm font-medium">
+                                <li class="flex items-start gap-4"><i class="fas fa-map-marker-alt mt-1 shrink-0" style="color: var(--accent-color);"></i><span>100 Financial District Blvd<br>New York, NY 10005</span></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-phone shrink-0" style="color: var(--accent-color);"></i><a href="tel:+15558888" class="break-all hover:text-[var(--accent-color)]">+1 (555) 888-FUND</a></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-envelope shrink-0" style="color: var(--accent-color);"></i><a href="contact.html" class="break-all hover:text-[var(--accent-color)]">apply@finbroker.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom flex flex-col md:flex-row justify-between items-center text-xs gap-6 font-semibold uppercase tracking-widest">
+                <p style="color: var(--text-muted);">&copy; 2026 Equipment Financing & Business Loan Broker. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-6 sm:gap-8">
+                    <a href="#">Terms of Service</a><a href="#">Financial Disclosures</a><a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- === JAVASCRIPT CORE === -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 20) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+        });
+
+        const mobileBtn = document.getElementById('mobile-btn');
+        const fullscreenMenu = document.getElementById('fullscreen-menu');
+        const closeMenu = document.getElementById('close-menu');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+
+        function toggleMenu() {
+            fullscreenMenu.classList.toggle('active');
+            drawerOverlay.classList.toggle('active');
+            document.body.style.overflow = fullscreenMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+        mobileBtn.onclick = toggleMenu; closeMenu.onclick = toggleMenu; drawerOverlay.onclick = toggleMenu;
+
+        const themeDesktop = document.getElementById('theme-toggle-desktop');
+        const themeMobile = document.getElementById('theme-toggle-mobile');
+        const theme = localStorage.getItem('theme') || 'light';
+
+        function updateThemeUI(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                if (themeMobile) themeMobile.classList.add('active');
+            } else {
+                document.body.classList.remove('dark-mode');
+                if (themeMobile) themeMobile.classList.remove('active');
+            }
+        }
+        updateThemeUI(theme === 'dark');
+
+        function toggleTheme() {
+            const isDark = !document.body.classList.contains('dark-mode');
+            updateThemeUI(isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        themeDesktop.onclick = toggleTheme;
+        if (themeMobile) themeMobile.onclick = toggleTheme;
+
+        const rtlBtn = document.getElementById('rtl-btn');
+        const rtlMobile = document.getElementById('rtl-toggle-mobile');
+        const dir = localStorage.getItem('dir') || 'ltr';
+
+        function updateRTLUI(currentDir) {
+            const isRTL = currentDir === 'rtl';
+            if (rtlBtn) rtlBtn.innerText = isRTL ? 'RTL' : 'LTR';
+            if (rtlMobile) rtlMobile.innerText = isRTL ? 'RTL' : 'LTR';
+        }
+        if (dir === 'rtl') { document.documentElement.dir = 'rtl'; }
+        updateRTLUI(dir);
+
+        function toggleRTL() {
+            const isRTL = document.documentElement.dir === 'rtl';
+            const newDir = isRTL ? 'ltr' : 'rtl';
+            document.documentElement.dir = newDir;
+            localStorage.setItem('dir', newDir);
+            updateRTLUI(newDir);
+        }
+        if (rtlBtn) rtlBtn.onclick = toggleRTL;
+        if (rtlMobile) rtlMobile.onclick = toggleRTL;
+    </script>
+</body>
+</html>
